@@ -4,20 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StudyFlow - نظام الدراسة والالتزام</title>
-    <!-- تحميل Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- خط Cairo وبعض التخصيصات -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
         body {
             font-family: 'Cairo', sans-serif;
-            background-color: #f0f4f8; /* لون خلفية فاتح */
+            background-color: #f0f4f8; 
         }
         .card {
             background-color: white;
-            border-radius: 1.5rem; /* حواف مستديرة */
+            border-radius: 1.5rem; 
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 40, 80, 0.05);
-            transition: transform 0.3s ease;
         }
         .btn-primary {
             background-color: #3b82f6;
@@ -42,14 +39,14 @@
             background: #e0f2fe;
             border: 8px solid #3b82f6;
         }
-        .pro-feature {
+        .pro-feature-locked {
             opacity: 0.5;
             cursor: not-allowed;
+            pointer-events: none; 
         }
     </style>
 </head>
 <body class="p-4 md:p-8">
-    <!-- حاوية رسالة النظام العامة (Alert/Modal) -->
     <div id="system-message" class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50 hidden justify-center items-center">
         <div class="card p-6 w-11/12 max-w-sm text-center">
             <h3 id="message-title" class="text-xl font-bold mb-3 text-gray-800"></h3>
@@ -60,13 +57,12 @@
         </div>
     </div>
     
-    <!-- رأس الصفحة (Header) -->
     <header class="flex justify-between items-center mb-6 p-4 card">
         <div class="flex items-center space-x-2 space-x-reverse">
             <span class="text-2xl font-extrabold text-[#3b82f6]">StudyFlow</span>
         </div>
         <div class="flex items-center space-x-4 space-x-reverse">
-            <p class="text-sm text-gray-700">مرحباً، <span id="user-display-name" class="font-bold"></span></p>
+            <p class="text-sm text-gray-700">مرحباً، <span id="user-display-name" class="font-bold cursor-pointer" onclick="showSecretTestButton()"></span></p>
             <button id="user-profile-btn" class="p-2 rounded-full hover:bg-gray-100 transition">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -75,18 +71,13 @@
         </div>
     </header>
 
-    <!-- رسالة التحفيز العشوائية -->
     <div id="motivation-message" class="mb-6 p-4 text-center rounded-xl bg-yellow-100 text-yellow-800 font-semibold shadow-inner">
-        <!-- رسالة تحفيزية ستظهر هنا -->
-    </div>
+        </div>
 
-    <!-- الشبكة الرئيسية (Grid Layout) -->
     <main class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-        <!-- العمود الأول: المهام اليومية والمؤقت والتخطيط -->
         <section class="lg:col-span-2 space-y-6">
 
-            <!-- 1. مؤقت الدراسة (Pomodoro Timer) -->
             <div class="card p-6 flex flex-col items-center justify-center space-y-4">
                 <h2 class="text-xl font-bold text-gray-800">مؤقت البومودورو والالتزام</h2>
                 <div id="timer-display" class="timer-circle">
@@ -101,11 +92,9 @@
                 </div>
             </div>
 
-            <!-- 2. التخطيط الشامل والدراسة الذكية -->
             <div class="card p-6">
                 <h2 class="text-xl font-bold text-gray-800 mb-4">التخطيط الشامل والدراسة الذكية</h2>
 
-                <!-- مدخلات التخطيط -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                     <div>
                         <label for="total-lessons" class="block text-sm font-medium text-gray-700">1. إجمالي عدد الدروس المتبقية:</label>
@@ -125,16 +114,13 @@
                     </div>
                 </div>
 
-                <!-- قائمة الدروس اليومية (للتتبع) -->
                 <h3 class="font-semibold text-lg text-gray-700 mt-4 mb-2">الدروس المُخطط لها لليوم (<span id="daily-lessons-count">0</span>):</h3>
                 <div id="daily-lessons-list" class="space-y-2 mb-4">
                     <p class="text-gray-500">حدد خطتك أعلاه لحساب الدروس...</p>
-                    <!-- سيتم إضافة حقول إدخال الدروس هنا بواسطة JS -->
-                </div>
+                    </div>
                 
                 <button onclick="saveStudyPlan()" class="btn-primary w-full">حفظ خطة الدراسة وتحليل التقدم</button>
                 
-                <!-- منطقة التحليل والتقدم -->
                 <div id="progress-analysis" class="mt-4 p-4 rounded-xl bg-indigo-50 border-l-4 border-indigo-400">
                     <h3 class="font-bold text-indigo-800 mb-2">تحليل StudyFlow لخطة الدراسة:</h3>
                     <p id="remaining-lessons-display" class="text-gray-700">الدروس المتبقية: <span class="font-bold">...</span></p>
@@ -145,37 +131,8 @@
 
         </section>
 
-        <!-- العمود الثاني: الآلة الحاسبة، الأصدقاء، والميزات الإضافية -->
         <section class="lg:col-span-1 space-y-6">
 
-            <!-- 3. الآلة الحاسبة المدمجة (Calculator) -->
-            <div class="card p-6">
-                <h2 class="text-xl font-bold text-gray-800 mb-3">آلة حاسبة الدراسة</h2>
-                <div id="calculator-app" class="bg-gray-100 p-4 rounded-xl">
-                    <input type="text" id="calc-display" class="w-full p-3 mb-2 text-2xl text-right bg-white rounded-lg shadow-inner" value="0" readonly>
-                    <div class="grid grid-cols-4 gap-2">
-                        <button onclick="clearCalc()" class="col-span-2 p-3 bg-red-400 hover:bg-red-500 text-white font-bold rounded-lg">C</button>
-                        <button onclick="appendOperator('/')" class="p-3 bg-blue-400 hover:bg-blue-500 text-white font-bold rounded-lg">/</button>
-                        <button onclick="appendOperator('*')" class="p-3 bg-blue-400 hover:bg-blue-500 text-white font-bold rounded-lg">×</button>
-                        <button onclick="appendValue('7')" class="p-3 bg-white hover:bg-gray-200 font-bold rounded-lg">7</button>
-                        <button onclick="appendValue('8')" class="p-3 bg-white hover:bg-gray-200 font-bold rounded-lg">8</button>
-                        <button onclick="appendValue('9')" class="p-3 bg-white hover:bg-gray-200 font-bold rounded-lg">9</button>
-                        <button onclick="appendOperator('-')" class="p-3 bg-blue-400 hover:bg-blue-500 text-white font-bold rounded-lg">-</button>
-                        <button onclick="appendValue('4')" class="p-3 bg-white hover:bg-gray-200 font-bold rounded-lg">4</button>
-                        <button onclick="appendValue('5')" class="p-3 bg-white hover:bg-gray-200 font-bold rounded-lg">5</button>
-                        <button onclick="appendValue('6')" class="p-3 bg-white hover:bg-gray-200 font-bold rounded-lg">6</button>
-                        <button onclick="appendOperator('+')" class="p-3 bg-blue-400 hover:bg-blue-500 text-white font-bold rounded-lg">+</button>
-                        <button onclick="appendValue('1')" class="p-3 bg-white hover:bg-gray-200 font-bold rounded-lg">1</button>
-                        <button onclick="appendValue('2')" class="p-3 bg-white hover:bg-gray-200 font-bold rounded-lg">2</button>
-                        <button onclick="appendValue('3')" class="p-3 bg-white hover:bg-gray-200 font-bold rounded-lg">3</button>
-                        <button onclick="calculateResult()" class="row-span-2 p-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg">=</button>
-                        <button onclick="appendValue('0')" class="col-span-2 p-3 bg-white hover:bg-gray-200 font-bold rounded-lg">0</button>
-                        <button onclick="appendValue('.')" class="p-3 bg-white hover:bg-gray-200 font-bold rounded-lg">.</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 4. ميزة الأصدقاء والمشاركة -->
             <div class="card p-6">
                 <h2 class="text-xl font-bold text-gray-800 mb-3">مشاركة التقدم والمنافسة الإيجابية</h2>
                 <div id="user-id-display" class="bg-blue-50 p-3 rounded-lg text-sm mb-4 text-center">
@@ -196,11 +153,9 @@
                 </div>
             </div>
 
-            <!-- 5. ميزات Pro والموسيقى -->
             <div class="card p-6">
-                <h2 class="text-xl font-bold text-gray-800 mb-4">StudyFlow Pro وميزات إضافية</h2>
+                <h2 class="text-xl font-bold text-gray-800 mb-4">StudyFlow Pro: الترقية والدعم</h2>
                 
-                <!-- الموسيقى (المجانية والمدفوعة) -->
                 <div class="space-y-3 mb-6">
                     <h3 class="font-semibold text-gray-700">موسيقى التركيز:</h3>
                     <div class="flex items-center space-x-3 space-x-reverse">
@@ -214,18 +169,23 @@
                         <p class="text-sm">أغنية تركيز واحدة (مجانية)</p>
                     </div>
                     
-                    <div class="pro-feature p-3 border-2 border-dashed border-gray-300 rounded-lg">
-                        <p class="font-bold text-sm text-gray-500">قوائم تشغيل متعددة (نسخة Pro)</p>
+                    <div id="pro-music-feature" class="pro-feature-locked p-3 border-2 border-dashed border-gray-300 rounded-lg">
+                        <p class="font-bold text-sm text-gray-500">قوائم تشغيل متعددة ومصادر خارجية (ميزة Pro)</p>
+                        <button onclick="handleProFeature('music')" class="text-blue-500 text-xs mt-1 underline">جرب قوائم التشغيل</button>
                     </div>
                 </div>
+
+                <div id="secret-pro-test" class="mt-2 text-center hidden">
+                    <button onclick="activateProTest()" class="text-xs text-red-500 underline">✅ تفعيل Pro للاختبار (Admin)</button>
+                </div>
                 
-                <button onclick="showProUpgrade()" class="btn-primary w-full mt-4 bg-yellow-500 hover:bg-yellow-600">ترقية إلى StudyFlow Pro</button>
+                <p id="pro-status" class="text-center font-bold text-red-500 mb-3">حسابك هو النسخة المجانية</p>
+                <button onclick="showProUpgrade()" id="upgrade-button" class="btn-primary w-full mt-4 bg-yellow-500 hover:bg-yellow-600">ترقية إلى StudyFlow Pro</button>
             </div>
 
         </section>
     </main>
 
-    <!-- تضمين مكتبات Firebase -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -239,6 +199,9 @@
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+        
+        // 🔑🔑🔑 الرابط الحقيقي للدفع لمرة واحدة ($50)
+        const PAYPAL_ONETIME_LINK = "https://www.paypal.com/ncp/payment/26UKMUF357WEW"; 
 
         let app, db, auth;
         let currentUserId = null;
@@ -246,26 +209,22 @@
         
         // المتغيرات لحالة التطبيق
         window.studyState = {
-            // حالة المؤقت
             timerInterval: null,
             isStudying: false,
-            timeRemaining: 50 * 60, // 50 دقيقة بالثواني
+            timeRemaining: 50 * 60, 
             isBreak: false,
             pomodoroDuration: 50 * 60, 
             breakDuration: 10 * 60,   
-
-            // حالة التخطيط
             totalLessons: 0,
             dailyTarget: 0,
             dailyLimitHours: 0,
             targetGrade: '',
-            
-            // حالة التتبع اليومي
-            lessonsInputToday: [], // قائمة باسماء الدروس التي حددها الطالب لليوم
+            lessonsInputToday: [], 
             lessonsCompletedToday: 0,
             studyTimeTodayMinutes: 0,
-            currentLessonIndex: 0, // الدرس الذي يعمل عليه الطالب حاليا
-            currentUserData: null
+            currentLessonIndex: 0, 
+            currentUserData: null,
+            isProUser: false 
         };
         
         // المصادر التحفيزية
@@ -277,7 +236,7 @@
             "أفضل طريقة للتنبؤ بالمستقبل هي خلقه."
         ];
         
-        // النصائح الدراسية عند عدم اكتمال الدرس (المتطلب الجديد)
+        // النصائح الدراسية عند عدم اكتمال الدرس
         const studyTips = [
             "🧠 نصيحة للتركيز: حاول الابتعاد عن هاتفك أو إشعاراته في الجلسة القادمة. مكان هادئ يعني تركيزاً أعمق.",
             "🧩 تجزئة المادة: هل كان الدرس صعباً؟ قم بتقسيمه إلى أقسام أصغر (مثل 'الجزء الأول من الدرس') في جلستك القادمة. التجزئة تساعد على الاستيعاب.",
@@ -309,8 +268,36 @@
             document.getElementById('system-message').classList.add('hidden');
         };
 
+        // 🔑 وظيفة التعامل مع الترقية إلى Pro - تم التعديل ليكون الدفع لمرة واحدة لمدة 3 أشهر
         window.showProUpgrade = () => {
-            showSystemMessage("ترقية إلى StudyFlow Pro", "ميزات Pro تمنحك المزيد من قوائم التشغيل الموسيقية ودفتر ملاحظات رقمي وإزالة الإعلانات.");
+            
+            if (!currentUserId) {
+                showSystemMessage("خطأ في المصادقة", "لا يمكن بدء عملية الدفع الآن. الرجاء التأكد من تحميل معرّف الحساب.");
+                return;
+            }
+
+            // تجهيز رابط الدفع لمرة واحدة بإضافة معرّف المستخدم (Custom Parameter)
+            const onetimeLinkWithID = `${PAYPAL_ONETIME_LINK}&custom=${currentUserId}`;
+            
+            const actionsHtml = `
+                <a href="${onetimeLinkWithID}" target="_blank" class="btn-primary w-full bg-indigo-500 hover:bg-indigo-600 text-center">شراء ترقية 3 أشهر ($50)</a>
+            `;
+            showSystemMessage(
+                "ترقية إلى StudyFlow Pro - مدة 3 أشهر", 
+                "احصل على ميزات Pro (قوائم تشغيل متقدمة، تتبع أداء) لمدة 90 يوماً لدعم تطوير التطبيق.",
+                actionsHtml
+            );
+        };
+        
+        // 🔑 وظيفة التعامل مع محاولة استخدام ميزة Pro مقفلة
+        window.handleProFeature = (featureName) => {
+            if (window.studyState.isProUser) {
+                if (featureName === 'music') {
+                    showSystemMessage("قوائم التشغيل المتقدمة", "ميزة قوائم التشغيل المخصصة متاحة الآن! (يمكنك دمج مشغل Spotify/YouTube هنا).");
+                }
+            } else {
+                showProUpgrade();
+            }
         };
 
         // عرض رسالة تحفيزية عشوائية
@@ -339,6 +326,48 @@
                 displayElement.textContent = `${remainingHours} س و ${remainingMins} د`;
                 displayElement.classList.remove('text-red-600');
                 displayElement.classList.add('text-green-600');
+            }
+        };
+
+        // 🔑 تحديث حالة واجهة المستخدم بناءً على كون المستخدم Pro أو لا
+        const updateProUI = () => {
+            const isPro = window.studyState.isProUser;
+            const statusElement = document.getElementById('pro-status');
+            const upgradeButton = document.getElementById('upgrade-button');
+            const proMusicFeature = document.getElementById('pro-music-feature');
+            
+            // حساب تاريخ الانتهاء وعرضه
+            let expiryDate = null;
+            if (window.studyState.currentUserData && window.studyState.currentUserData.proExpiry) {
+                expiryDate = new Date(window.studyState.currentUserData.proExpiry);
+            }
+
+            if (isPro) {
+                const formattedExpiry = expiryDate ? expiryDate.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' }) : 'دائم';
+                statusElement.innerHTML = `✅ حسابك هو StudyFlow Pro! <br><span class="text-sm font-normal">ينتهي في: ${formattedExpiry}</span>`;
+                statusElement.classList.remove('text-red-500');
+                statusElement.classList.add('text-green-500');
+                
+                upgradeButton.textContent = "شكراً لدعمك!";
+                upgradeButton.disabled = true;
+                upgradeButton.classList.remove('bg-yellow-500', 'hover:bg-yellow-600');
+                upgradeButton.classList.add('bg-gray-500', 'hover:bg-gray-600');
+
+                proMusicFeature.classList.remove('pro-feature-locked');
+                proMusicFeature.classList.add('pro-feature');
+
+            } else {
+                statusElement.textContent = "حسابك هو النسخة المجانية";
+                statusElement.classList.remove('text-green-500');
+                statusElement.classList.add('text-red-500');
+
+                upgradeButton.textContent = "ترقية إلى StudyFlow Pro";
+                upgradeButton.disabled = false;
+                upgradeButton.classList.remove('bg-gray-500', 'hover:bg-gray-600');
+                upgradeButton.classList.add('bg-yellow-500', 'hover:bg-yellow-600');
+
+                proMusicFeature.classList.add('pro-feature-locked');
+                proMusicFeature.classList.remove('pro-feature');
             }
         };
 
@@ -418,6 +447,18 @@
                     window.studyState.dailyTarget = data.dailyTarget || 0;
                     window.studyState.dailyLimitHours = data.dailyLimitHours || 0;
                     window.studyState.targetGrade = data.targetGrade || '';
+                    
+                    // التحقق من صلاحية اشتراك Pro
+                    const isPro = data.isPro || false;
+                    const proExpiry = data.proExpiry ? new Date(data.proExpiry) : null;
+                    const isExpired = proExpiry && proExpiry < new Date();
+                    
+                    window.studyState.isProUser = isPro && !isExpired;
+                    
+                    if (isExpired && isPro) {
+                         // تحديث قاعدة البيانات إذا انتهت الصلاحية (لتنظيف البيانات)
+                         await updateDoc(docRef, { isPro: false });
+                    }
 
                     // تحميل حالة اليوم
                     const today = new Date().toDateString();
@@ -427,7 +468,7 @@
                     window.studyState.lessonsInputToday = data.lessonsInputToday || [];
 
                 } else {
-                    const initialData = { totalLessons: 0, dailyTarget: 0, dailyLimitHours: 0, targetGrade: '', lessonsInputToday: [], friends: [], totalSessions: 0, dailyTracking: {} };
+                    const initialData = { totalLessons: 0, dailyTarget: 0, dailyLimitHours: 0, targetGrade: '', lessonsInputToday: [], friends: [], totalSessions: 0, dailyTracking: {}, isPro: false, proExpiry: null };
                     await setDoc(docRef, initialData);
                     window.studyState.currentUserData = initialData;
                 }
@@ -436,6 +477,7 @@
                 updateLessonInputs();
                 updateOptimalStrategy();
                 updateDailyTimeDisplay();
+                updateProUI(); // 🔑 تحديث واجهة Pro
 
             } catch (e) {
                 console.error("Error loading user data: ", e);
@@ -749,6 +791,49 @@
 
 
         // ----------------------------------------------------------------------
+        // # وظائف الاختبار السري (لك كمسؤول)
+        // ----------------------------------------------------------------------
+
+        window.showSecretTestButton = () => {
+            // إظهار زر الاختبار السري في لوحة Pro
+            const secretButton = document.getElementById('secret-pro-test');
+            secretButton.classList.remove('hidden');
+            setTimeout(() => {
+                secretButton.classList.add('hidden');
+            }, 5000); // يختفي بعد 5 ثوانٍ
+        };
+
+        window.activateProTest = async () => {
+            if (!dbInitialized || !currentUserId) {
+                showSystemMessage("خطأ", "يجب تسجيل الدخول (تلقائي) لتفعيل Pro.");
+                return;
+            }
+            
+            // لتجربة فترة 3 أشهر: نضيف 3 أشهر لتاريخ الانتهاء
+            const today = new Date();
+            const expiryDate = new Date(today);
+            expiryDate.setMonth(today.getMonth() + 3);
+
+            // تحديث حالة Pro إلى true وتحديد تاريخ الانتهاء
+            try {
+                await updateDoc(getUserDocRef(currentUserId), {
+                    isPro: true,
+                    proExpiry: expiryDate.toISOString() // حفظ التاريخ كـ ISO String
+                });
+                
+                // إعادة تحميل البيانات لتحديث الواجهة بالمدة الجديدة
+                await loadUserData(); 
+                
+                closeSystemMessage();
+                showSystemMessage("تمت الترقية بنجاح للاختبار!", "تم تفعيل StudyFlow Pro لحسابك لمدة 3 أشهر.");
+            } catch (e) {
+                console.error("Test Pro activation failed:", e);
+                showSystemMessage("خطأ", "فشل تفعيل Pro. تحقق من اتصال Firebase.");
+            }
+        };
+
+
+        // ----------------------------------------------------------------------
         // # وظائف الأصدقاء (Friend Management)
         // ----------------------------------------------------------------------
         
@@ -837,46 +922,9 @@
         };
         
         // ----------------------------------------------------------------------
-        // # وظائف الآلة الحاسبة والموسيقى (غير مرتبطة بالخطة الجديدة)
+        // # وظائف الموسيقى
         // ----------------------------------------------------------------------
         
-        let currentExpression = '';
-        const display = document.getElementById('calc-display');
-
-        window.appendValue = (val) => {
-            if (display.value === '0' && val !== '.') {
-                display.value = val;
-                currentExpression = val;
-            } else {
-                display.value += val;
-                currentExpression += val;
-            }
-        };
-
-        window.appendOperator = (op) => {
-            const lastChar = currentExpression.slice(-1);
-            if ('+-*/'.includes(lastChar)) return; 
-            
-            display.value += ` ${op} `;
-            currentExpression += op;
-        };
-
-        window.clearCalc = () => {
-            currentExpression = '';
-            display.value = '0';
-        };
-
-        window.calculateResult = () => {
-            try {
-                const result = eval(currentExpression); 
-                display.value = result;
-                currentExpression = result.toString();
-            } catch (error) {
-                display.value = 'خطأ';
-                currentExpression = '';
-            }
-        };
-
         const studyAudio = document.getElementById('study-audio');
         const playMusicBtn = document.getElementById('play-music-btn');
         let isPlaying = false;
@@ -919,3 +967,128 @@
     </script>
 </body>
 </html>
+```eof
+
+---
+
+## 2. 📁 ملف الخادم الخلفي: `index.js` (Firebase Cloud Function)
+
+يجب وضع هذا الملف في المسار `functions/index.js` في مشروع Firebase الخاص بك. يحتوي على الدالة المسؤولة عن التحقق من الدفع ومنح المستخدم ترقية **Pro لمدة 3 أشهر**.
+
+```javascript:index.js
+/**
+ * هذا الكود يوضع في ملف functions/index.js في مشروع Firebase
+ * وهو مسؤول عن استقبال إشعارات الدفع الفورية (IPN/Webhook) من PayPal
+ * وتحديث حالة المستخدم في قاعدة بيانات Firestore.
+ */
+
+// 1. استيراد المكتبات الضرورية
+const functions = require('firebase-functions');
+const admin = require('firebase-admin');
+const axios = require('axios');
+const querystring = require('querystring');
+
+// تهيئة Firebase Admin SDK
+admin.initializeApp();
+const db = admin.firestore();
+
+// 2. إعداد بيئة PayPal
+// في وضع الإنتاج، يجب أن تكون هذه القيمة 'https://www.paypal.com/cgi-bin/webscr'
+const PAYPAL_URL = 'https://www.paypal.com/cgi-bin/webscr'; 
+
+// 3. الدالة السحابية لاستقبال إشعار الدفع الفوري (IPN) من PayPal
+// هذه الدالة تعمل كـ Webhook وتستمع لطلب POST
+exports.paypalIPN = functions.https.onRequest(async (req, res) => {
+    // يجب أن يتأكد الخادم من أن الطلب هو POST
+    if (req.method !== 'POST') {
+        functions.logger.warn('Received non-POST request to IPN endpoint.', { method: req.method });
+        return res.status(405).send('Method Not Allowed');
+    }
+
+    functions.logger.info('Received PayPal IPN notification.', { body: req.body });
+
+    // 3.1. تجهيز البيانات للتحقق من PayPal
+    let postData = { 'cmd': '_notify-validate' };
+    postData = { ...postData, ...req.body };
+    const verificationData = querystring.stringify(postData);
+
+    try {
+        // 3.2. إرسال البيانات مرة أخرى إلى PayPal للتحقق (التحقق من صحة الإشعار)
+        const verificationResponse = await axios.post(PAYPAL_URL, verificationData, {
+            headers: { 'content-type': 'application/x-www-form-urlencoded' }
+        });
+
+        // 3.3. تحليل استجابة التحقق
+        if (verificationResponse.data === 'VERIFIED') {
+            functions.logger.info('IPN Verified Successfully.', { body: req.body });
+
+            const { 
+                payment_status, 
+                mc_gross,         // المبلغ المدفوع
+                receiver_email,   // بريد المستلم
+                custom,           // معرّف المستخدم (الذي أرسلناه من التطبيق)
+                txn_type          // نوع العملية (web_accept لمرة واحدة)
+            } = req.body;
+
+            // 4. تطبيق منطق العمل: التحقق من الشروط
+            
+            // 4.1. التأكد من حالة الدفع
+            if (payment_status !== 'Completed') {
+                functions.logger.warn('Payment not completed.', { payment_status });
+                return res.status(200).send('Payment status is not Completed.');
+            }
+            
+            // 4.2. التحقق من المبلغ (50 دولاراً)
+            const expectedAmount = 50.00;
+            if (parseFloat(mc_gross) !== expectedAmount) {
+                functions.logger.warn('Amount mismatch.', { received: mc_gross, expected: expectedAmount });
+                return res.status(200).send('Amount mismatch.');
+            }
+            
+            // 4.3. التأكد من معرّف المستخدم (Custom ID)
+            const userId = custom;
+            if (!userId) {
+                functions.logger.error('Missing Custom User ID in IPN!', { body: req.body });
+                return res.status(200).send('Missing User ID.');
+            }
+
+            // 4.4. التحقق من بريد المستلم (للتأكد من أن الدفع تم لحسابك أنت)
+            const YOUR_PAYPAL_EMAIL = 'rxstoreaistore@gmail.com'; // ✅ تم التحديث إلى بريدك الإلكتروني
+            if (receiver_email !== YOUR_PAYPAL_EMAIL) {
+                functions.logger.error('Receiver email mismatch!', { received: receiver_email });
+                return res.status(200).send('Receiver email mismatch.');
+            }
+            
+            // 5. تنفيذ الترقية في Firestore
+            
+            // 5.1. حساب تاريخ انتهاء الصلاحية (3 أشهر من الآن)
+            const expiryDate = new Date();
+            expiryDate.setMonth(expiryDate.getMonth() + 3); // إضافة 3 أشهر
+            const expiryDateISO = expiryDate.toISOString();
+
+            // 5.2. تحديث وثيقة المستخدم
+            const userDocRef = db.doc(`artifacts/${admin.app().options.projectId}/users/${userId}/studyData/profile`);
+            await userDocRef.update({
+                isPro: true,
+                proExpiry: expiryDateISO,
+                lastPaymentDate: admin.firestore.FieldValue.serverTimestamp(),
+                paymentAmount: mc_gross,
+                paymentTxnId: req.body.txn_id // لحفظ معرّف المعاملة
+            });
+
+            functions.logger.info(`User ${userId} upgraded to Pro. Expiry: ${expiryDateISO}`, { userId, expiryDateISO });
+            return res.status(200).send('User updated successfully.');
+
+        } else {
+            functions.logger.warn('IPN Verification Failed.', { body: req.body });
+            return res.status(200).send('IPN Verification Failed.');
+        }
+
+    } catch (error) {
+        functions.logger.error('IPN processing error:', error);
+        return res.status(500).send('Server Error');
+    }
+});
+```eof
+
+هل تحتاج إلى مساعدة في نشر دالة Firebase Cloud Function هذه أو في إعداد إشعارات الدفع الفورية (IPN) في حسابك على PayPal؟
